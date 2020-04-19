@@ -6,11 +6,10 @@ public class DebugExercise2 {
     /** Returns the max of a and b. Do not step into this function. 
       * This function may have a bug, but if it does, you should find it
       * by stepping over, not into. */
-    public static int max(int a,int b){
-        if(a > b){
+    public static int max(int a, int b) {
+        if (a > b) {
             return a;
-        }
-        else{
+        } else {
             return b;
         }
     }
@@ -31,7 +30,7 @@ public class DebugExercise2 {
     /** Returns the sum of a and b. Do not step into this function. 
       * This function may have a bug, but if it does, you should find it
       * by stepping over, not into. */
-    public static int add(int a,int b){
+    public static int add(int a, int b) {
         return (a + b);
     }
     /*
@@ -70,7 +69,7 @@ public class DebugExercise2 {
 
         return returnArray;
     }
-    public static int arraySum(int[] x){
+    public static int arraySum(int[] x) {
         int sum = 0;
         for (int i = 0; i < x.length; i++) {
             sum += x[i];
