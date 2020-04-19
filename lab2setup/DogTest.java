@@ -13,4 +13,5 @@ public class DogTest {
         Dog d = new Dog(20);
         assertEquals("bark", d.noise());
     }
+
 }
