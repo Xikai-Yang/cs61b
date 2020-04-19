@@ -6,24 +6,40 @@ public class DebugExercise2 {
     /** Returns the max of a and b. Do not step into this function. 
       * This function may have a bug, but if it does, you should find it
       * by stepping over, not into. */
+    public static int max(int a,int b){
+        if(a>b){
+            return a;
+        }
+        else{
+            return b;
+        }
+    }
+    /*
     public static int max(int a, int b) {
         int w = (b - a) >> 31;
+     */
         /* If you're stepping into this function, click the
            step out button because you're not going to learn anything. */
+        /*
         int z = ~(b - a) >> 31;
 
         int max = b & w | a & z;
         return max;
-    }
+    } */
 
 
     /** Returns the sum of a and b. Do not step into this function. 
       * This function may have a bug, but if it does, you should find it
-      * by stepping over, not into. */    
+      * by stepping over, not into. */
+    public static int add(int a,int b){
+        return (a+b);
+    }
+    /*
     public static int add(int a, int b) {
         int x = a, y = b;
         /* If you're stepping into this function, click the
            step out button because you're not going to learn anything. */
+        /*
         int xor, and, temp;
         and = x & y;
         xor = x ^ y;
@@ -35,7 +51,7 @@ public class DebugExercise2 {
             xor = temp;
         }
         return xor;
-    }
+    }*/
 
     /** Returns a new array where entry i is the max of
      * a[i] and b[i]. For example, if a = {1, -10, 3}
@@ -54,8 +70,15 @@ public class DebugExercise2 {
 
         return returnArray;
     }
-
+    public static int arraySum(int[] x){
+        int sum=0;
+        for (int i = 0; i < x.length; i++) {
+            sum+=x[i];
+        }
+        return sum;
+    }
     /** Returns the sum of all elements in x. */
+    /*
     public static int arraySum(int[] x) {
         int i = 0;
         int sum = 0;
@@ -65,7 +88,7 @@ public class DebugExercise2 {
         }
         return sum;
     }
-
+    */
     /** Returns the sum of the element-wise max of a and b.
      *  For example if a = {2, 0, 10, 14} and b = {-5, 5, 20, 30},
      *  the result should be 57.
