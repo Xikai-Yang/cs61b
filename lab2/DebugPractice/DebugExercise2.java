@@ -7,7 +7,7 @@ public class DebugExercise2 {
       * This function may have a bug, but if it does, you should find it
       * by stepping over, not into. */
     public static int max(int a,int b){
-        if(a>b){
+        if(a > b){
             return a;
         }
         else{
@@ -32,7 +32,7 @@ public class DebugExercise2 {
       * This function may have a bug, but if it does, you should find it
       * by stepping over, not into. */
     public static int add(int a,int b){
-        return (a+b);
+        return (a + b);
     }
     /*
     public static int add(int a, int b) {
@@ -71,9 +71,9 @@ public class DebugExercise2 {
         return returnArray;
     }
     public static int arraySum(int[] x){
-        int sum=0;
+        int sum = 0;
         for (int i = 0; i < x.length; i++) {
-            sum+=x[i];
+            sum += x[i];
         }
         return sum;
     }

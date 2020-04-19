@@ -4,7 +4,7 @@
  */
 public class DebugExercise1 {
     public static int divideThenRound(int top, int bottom) {
-        float quotient = (float)top / (float)bottom;
+        float quotient = (float) top / (float) bottom;
         int result = Math.round(quotient);
         return result;
     }
