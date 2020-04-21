@@ -28,7 +28,8 @@ public class StdDrawDemo {
 
 		/* Shows the drawing to the screen, and waits 2000 milliseconds. */
 		StdDraw.show();
-		StdDraw.pause(2000);		
+		StdDraw.pause(2000);
+
 	}
 
 	/* Draws random copies of the image, clearing in between
@@ -97,7 +98,7 @@ public class StdDrawDemo {
 	public static void main(String[] args) {
 		
 		drawThree();
-		drawRandom();
+		//drawRandom();
 		drawZoom();
 	}
 } 
