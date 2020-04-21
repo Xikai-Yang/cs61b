@@ -55,9 +55,9 @@ public class NBody {
         }
 
         StdOut.printf("%d\n",parray.length);
-        StdOut.printf("%f\n",radius);
+        StdOut.printf("%.2e\n",radius);
         for (int i = 0;i < parray.length;++i) {
-            StdOut.printf("%11.4f %11.4f %11.4f %11.4f %11.4f %12s\n",parray[i].xxPos,parray[i].yyPos,
+            StdOut.printf("%11.4e %11.4e %11.4e %11.4e %11.4e %12s\n",parray[i].xxPos,parray[i].yyPos,
                     parray[i].xxVel,parray[i].yyVel,parray[i].mass,parray[i].imgFileName);
         }
 
