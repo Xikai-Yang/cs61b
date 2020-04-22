@@ -26,7 +26,7 @@ public class LinkedListDeque<T> {
         if (index > size - 1) {
             return null;
         }
-        return getRecursive(sentinel, index+1);
+        return getRecursive(sentinel, index + 1);
     }
     private T getRecursive(Node node, int index) {
         if (index == 0) {
@@ -88,7 +88,7 @@ public class LinkedListDeque<T> {
         while (true) {
             temp = temp.next;
             count++;
-            if(count == index + 1) {
+            if (count == index + 1) {
                 break;
             }
         }

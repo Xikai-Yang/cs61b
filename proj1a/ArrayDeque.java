@@ -1,5 +1,3 @@
-import java.util.Objects;
-
 public class ArrayDeque<T> {
     private static final int DEFAULT_CAPACITY = 8;
     private T[] myarray;
@@ -21,8 +19,8 @@ public class ArrayDeque<T> {
                 newlength = DEFAULT_CAPACITY / 2;
             }
             T[] newarray = (T[]) new Object[newlength * 2];
-            System.arraycopy(myarray,nextfirst + 1,newarray,length - 1,length);
-            nextfirst = length - 2;
+            System.arraycopy(myarray, nextfirst + 1, newarray, length + 1, length);
+            nextfirst = length;
             nextlast = nextfirst + length;
             myarray = newarray;
         }
@@ -30,14 +28,14 @@ public class ArrayDeque<T> {
     private void resize() {
         if (nextfirst < 0) {
             T[] newarray = (T[]) new Object[myarray.length * 2];
-            System.arraycopy(myarray,0,newarray,myarray.length - 1,myarray.length);
+            System.arraycopy(myarray, 0, newarray, myarray.length - 1, myarray.length);
             nextfirst = myarray.length - 2;
             nextlast += myarray.length - 1;
             myarray = newarray;
         }
         if (nextlast >= myarray.length) {
             T[] newarray = (T[]) new Object[myarray.length * 2];
-            System.arraycopy(myarray,0,newarray,0,myarray.length);
+            System.arraycopy(myarray, 0, newarray, 0, myarray.length);
             nextlast = myarray.length;
             myarray = newarray;
 
@@ -71,7 +69,7 @@ public class ArrayDeque<T> {
     public void printDeque() {
         int start = nextfirst + 1;
         int end = nextlast - 1;
-        for (int i = start; i <= end ; ++i) {
+        for (int i = start; i <= end; ++i) {
             System.out.print(myarray[i] + " ");
         }
         System.out.println();
@@ -99,5 +97,4 @@ public class ArrayDeque<T> {
     public T get(int index) {
         return myarray[index + nextfirst + 1];
     }
-    
 }
