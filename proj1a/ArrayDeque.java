@@ -12,16 +12,18 @@ public class ArrayDeque<T> {
         nextlast = default_capacity/2;
         size = 0;
     }
-    public void shrink() {
+    private void shrink() {
         double load_factor = (double) size / (double) myarray.length;
-        if((load_factor <= 0.25) && (myarray.length >= 16)) {
+        if((load_factor < 0.25) && (myarray.length >= 16)) {
             int length = nextlast - nextfirst;
             T[] newarray = (T[]) new Object[length*2];
             System.arraycopy(myarray,nextfirst+1,newarray,length-1,length);
+            nextfirst = length - 2;
+            nextlast = nextfirst + length;
             myarray = newarray;
         }
     }
-    public void resize() {
+    private void resize() {
         if(nextfirst < 0) {
             T[] newarray = (T[]) new Object[myarray.length * 2];
             System.arraycopy(myarray,0,newarray,myarray.length-1,myarray.length);
@@ -71,6 +73,9 @@ public class ArrayDeque<T> {
         System.out.println();
     }
     public T removeFirst() {
+        if(size == 0) {
+            return null;
+        }
         nextfirst++;
         T temp = myarray[nextfirst];
         size--;
@@ -78,6 +83,9 @@ public class ArrayDeque<T> {
         return temp;
     }
     public T removeLast() {
+        if(size == 0) {
+            return null;
+        }
         nextlast--;
         T temp = myarray[nextlast];
         size--;
