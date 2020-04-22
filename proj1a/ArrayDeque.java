@@ -19,10 +19,13 @@ public class ArrayDeque<T> {
                 newlength = DEFAULT_CAPACITY / 2;
             }
             T[] newarray = (T[]) new Object[newlength * 2];
-            System.arraycopy(myarray, nextfirst + 1, newarray, length + 1, length);
-            nextfirst = length;
+            System.arraycopy(myarray, nextfirst + 1, newarray, length - 1, length);
+            nextfirst = length - 2;
             nextlast = nextfirst + length;
             myarray = newarray;
+            if(nextfirst < 0) {
+                resize();
+            }
         }
     }
     private void resize() {
@@ -97,4 +100,5 @@ public class ArrayDeque<T> {
     public T get(int index) {
         return myarray[index + nextfirst + 1];
     }
+    
 }
