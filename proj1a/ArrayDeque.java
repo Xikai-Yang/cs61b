@@ -87,22 +87,5 @@ public class ArrayDeque<T> {
     public T get(int index) {
         return myarray[index+nextfirst+1];
     }
-    public static void main(String[] args) {
-        ArrayDeque<Integer> mydeque = new ArrayDeque<Integer>();
 
-        mydeque.addFirst(15);
-        mydeque.addFirst(25);
-        mydeque.addFirst(30);
-        mydeque.addFirst(45);
-        mydeque.addFirst(50);
-        mydeque.addFirst(60);
-        mydeque.addFirst(70);
-        mydeque.addLast(20);
-        mydeque.addLast(30);
-        mydeque.addLast(40);
-        mydeque.addLast(50);
-        mydeque.addLast(60);
-        mydeque.printDeque();
-
-    }
 }
