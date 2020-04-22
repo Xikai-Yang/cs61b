@@ -16,6 +16,9 @@ public class ArrayDeque<T> {
         double load_factor = (double) size / (double) myarray.length;
         if((load_factor < 0.25) && (myarray.length >= 16)) {
             int length = nextlast - nextfirst;
+            if(length < 4) {
+                length = 4;
+            }
             T[] newarray = (T[]) new Object[length*2];
             System.arraycopy(myarray,nextfirst+1,newarray,length-1,length);
             nextfirst = length - 2;

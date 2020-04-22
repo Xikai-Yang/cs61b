@@ -55,6 +55,7 @@ public class LinkedListDeque<T> {
         }
         else {
             sentinel.prev.next = new Node(item,sentinel.prev,null);
+            sentinel.prev.next.next = sentinel;
             sentinel.prev = sentinel.prev.next;
         }
 
@@ -75,7 +76,7 @@ public class LinkedListDeque<T> {
             return null;
         }
         T temp = sentinel.prev.item;
-        sentinel.prev.prev.next = null;
+        sentinel.prev.prev.next = sentinel;
         sentinel.prev = sentinel.prev.prev;
         size--;
         return temp;
@@ -111,4 +112,5 @@ public class LinkedListDeque<T> {
         }
         System.out.println();
     }
+
 }
