@@ -100,5 +100,5 @@ public class ArrayDeque<T> {
     public T get(int index) {
         return myarray[index + nextfirst + 1];
     }
-    
+
 }
