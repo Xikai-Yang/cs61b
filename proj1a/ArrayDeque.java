@@ -1,104 +1,90 @@
 public class ArrayDeque<T> {
     private static final int DEFAULT_CAPACITY = 8;
-    private T[] myarray;
-    private int size;
-    private int nextfirst;
-    private int nextlast;
+    private int size = 0;
+    private T[] data;
+    private int first = 0;
     public ArrayDeque() {
-        myarray = (T[]) new Object[DEFAULT_CAPACITY];
-        nextfirst = DEFAULT_CAPACITY / 2 - 1;
-        nextlast = DEFAULT_CAPACITY / 2;
         size = 0;
+        first = 0;
+        data = (T[]) new Object[DEFAULT_CAPACITY];
     }
-    private void shrink() {
-        double load_factor = (double) size / (double) myarray.length;
-        if ((load_factor < 0.25) && (myarray.length >= 16)) {
-            int length = nextlast - nextfirst;
-            int newlength = length;
-            if (length < DEFAULT_CAPACITY / 2) {
-                newlength = DEFAULT_CAPACITY / 2;
-            }
-            T[] newarray = (T[]) new Object[newlength * 2];
-            System.arraycopy(myarray, nextfirst + 1, newarray, length - 1, length);
-            nextfirst = length - 2;
-            nextlast = nextfirst + length;
-            myarray = newarray;
-            if(nextfirst < 0) {
-                resize();
-            }
-        }
-    }
-    private void resize() {
-        if (nextfirst < 0) {
-            T[] newarray = (T[]) new Object[myarray.length * 2];
-            System.arraycopy(myarray, 0, newarray, myarray.length - 1, myarray.length);
-            nextfirst = myarray.length - 2;
-            nextlast += myarray.length - 1;
-            myarray = newarray;
-        }
-        if (nextlast >= myarray.length) {
-            T[] newarray = (T[]) new Object[myarray.length * 2];
-            System.arraycopy(myarray, 0, newarray, 0, myarray.length);
-            nextlast = myarray.length;
-            myarray = newarray;
-
-        }
-    }
-
-    public void addFirst(T item) {
-        shrink();
-        myarray[nextfirst] = item;
-        size++;
-        nextfirst--;
-        if (nextfirst < 0) {
-            resize();
-        }
-    }
-    public void addLast(T item) {
-        shrink();
-        myarray[nextlast] = item;
-        size++;
-        nextlast++;
-        if (nextlast > myarray.length - 1) {
-            resize();
-        }
+    /**
+     * addFirst && addLast
+     * isEmpty size
+     * removeFirst && removeLast
+     * get(int index)
+     * all constant time
+     */
+    public int size() {
+        return size;
     }
     public boolean isEmpty() {
         return (size == 0);
     }
-    public int size() {
-        return size;
-    }
-    public void printDeque() {
-        int start = nextfirst + 1;
-        int end = nextlast - 1;
-        for (int i = start; i <= end; ++i) {
-            System.out.print(myarray[i] + " ");
+    public void addFirst(T item) {
+        // don't forget to resize!
+        if(size == data.length) {
+            resize(data.length * 2);
         }
-        System.out.println();
+        data[first] = item;
+        first = (first - 1 + data.length) % data.length;
+        size++;
+    }
+    public void addLast(T item) {
+        // resize!
+        if(size == data.length) {
+            resize(data.length * 2);
+        }
+        int last = (first + 1 + size) % data.length;
+        data[last] = item;
+        size++;
+    }
+    private void resize(int capacity) {
+        T[] newdata = (T[]) new Object[capacity];
+        int current_first = (first + 1) % data.length;
+        int first_part = data.length - current_first;
+        int second_part = data.length - first_part;
+        System.arraycopy(data, current_first, newdata,
+                0, first_part);
+        System.arraycopy(data, 0, newdata, first_part, second_part);
+        data = newdata;
     }
     public T removeFirst() {
-        if (size == 0) {
-            return null;
-        }
-        nextfirst++;
-        T temp = myarray[nextfirst];
+        int current_first = (first + 1) % data.length;
+        first = current_first;
         size--;
         shrink();
-        return temp;
+        return data[current_first];
     }
     public T removeLast() {
-        if (size == 0) {
-            return null;
-        }
-        nextlast--;
-        T temp = myarray[nextlast];
+        int last = (first + 1 + size) % data.length;
+        last = (last - 1 + data.length) % data.length;
         size--;
         shrink();
-        return temp;
+        return data[last];
     }
     public T get(int index) {
-        return myarray[index + nextfirst + 1];
+        int location = (first + 1 + index) % data.length;
+        return data[location];
     }
-
+    private void shrink() {
+        double load_factor = (double) size / (double) data.length;
+        boolean condition = (data.length >= 16) && (load_factor < 0.25);
+        if (condition) {
+            resize(data.length / 2 + 1);
+        }
+    }
+    public void printDeque() {
+        int current_first = (first + 1 + data.length) % data.length;
+        int ptr = current_first;
+        int current_last = (first + size) % data.length;
+        while (true) {
+            System.out.print(data[ptr] + " ");
+            ptr = (ptr + 1) % data.length;
+            if (ptr == current_last) {
+                break;
+            }
+        }
+    }
+    
 }
