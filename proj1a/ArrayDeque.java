@@ -81,7 +81,14 @@ public class ArrayDeque<T> {
         double load_factor = (double) size / (double) data.length;
         boolean condition = (data.length >= 16) && (load_factor < 0.25);
         if (condition) {
-            resize(data.length / 2 + 1);
+            int current_first = (first + 1) % data.length;
+            T[] newdata = (T[]) new Object[data.length / 2 + 1];
+            for (int i = 0; i < size; i++) {
+                newdata[i] = data[current_first];
+                current_first = (current_first + 1) % data.length;
+            }
+            data = newdata;
+            first = newdata.length - 1;
         }
     }
     public void printDeque() {
@@ -96,5 +103,4 @@ public class ArrayDeque<T> {
             }
         }
     }
-    
 }
