@@ -56,9 +56,10 @@ public class ArrayDeque<T> {
         }
         int current_first = (first + 1) % data.length;
         first = current_first;
+        T temp = data[current_first];
         size--;
         shrink();
-        return data[current_first];
+        return temp;
     }
     public T removeLast() {
         if (isEmpty()) {
@@ -66,9 +67,10 @@ public class ArrayDeque<T> {
         }
         int last = (first + 1 + size) % data.length;
         last = (last - 1 + data.length) % data.length;
+        T temp = data[last];
         size--;
         shrink();
-        return data[last];
+        return temp;
     }
     public T get(int index) {
         if (index > size - 1) {
@@ -102,5 +104,31 @@ public class ArrayDeque<T> {
                 break;
             }
         }
+    }
+    public static void main(String[] args) {
+        ArrayDeque<Integer> AD = new ArrayDeque<>();
+        AD.addFirst(0);
+        AD.removeLast();//      ==> 0
+        AD.addFirst(2);
+        AD.addLast(3);
+        AD.addFirst(4);
+        AD.addFirst(5);
+        AD.addLast(6);
+        AD.get(3);//      ==> 3
+        AD.removeFirst();//     ==> 5
+        AD.addLast(9);
+        AD.get(0);//      ==> 4
+        AD.addFirst(11);
+        AD.addLast(12);
+        AD.addLast(13);
+        AD.addFirst(14);
+        AD.removeLast();//     ==> 13
+        AD.removeFirst();//     ==> 14
+        AD.removeLast();//      ==> 12
+        AD.removeLast();//      ==> 9
+        AD.removeLast();//      ==> 6
+        AD.get(1);//      ==> 4
+        AD.get(2);//      ==> 2
+        AD.removeLast();//      ==> null
     }
 }
