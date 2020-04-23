@@ -48,8 +48,12 @@ public class ArrayDeque<T> {
                 0, first_part);
         System.arraycopy(data, 0, newdata, first_part, second_part);
         data = newdata;
+        first = data.length - 1;
     }
     public T removeFirst() {
+        if (isEmpty()) {
+            return null;
+        }
         int current_first = (first + 1) % data.length;
         first = current_first;
         size--;
@@ -57,6 +61,9 @@ public class ArrayDeque<T> {
         return data[current_first];
     }
     public T removeLast() {
+        if (isEmpty()) {
+            return null;
+        }
         int last = (first + 1 + size) % data.length;
         last = (last - 1 + data.length) % data.length;
         size--;
@@ -64,6 +71,9 @@ public class ArrayDeque<T> {
         return data[last];
     }
     public T get(int index) {
+        if (index > size - 1) {
+            return null;
+        }
         int location = (first + 1 + index) % data.length;
         return data[location];
     }
