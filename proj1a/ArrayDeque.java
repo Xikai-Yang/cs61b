@@ -23,7 +23,7 @@ public class ArrayDeque<T> {
     }
     public void addFirst(T item) {
         // don't forget to resize!
-        if(size == data.length) {
+        if (size == data.length) {
             resize(data.length * 2);
         }
         data[first] = item;
@@ -32,7 +32,7 @@ public class ArrayDeque<T> {
     }
     public void addLast(T item) {
         // resize!
-        if(size == data.length) {
+        if (size == data.length) {
             resize(data.length * 2);
         }
         int last = (first + 1 + size) % data.length;
@@ -85,7 +85,7 @@ public class ArrayDeque<T> {
         if (condition) {
             int current_first = (first + 1) % data.length;
             T[] newdata = (T[]) new Object[data.length / 2 + 1];
-            for (int i = 0; i < size; i++) {
+            for (int i = 0; i < size; ++i) {
                 newdata[i] = data[current_first];
                 current_first = (current_first + 1) % data.length;
             }
@@ -105,5 +105,10 @@ public class ArrayDeque<T> {
             }
         }
     }
-    
+    public static void main(String[] args) {
+        int residual = (-1) % 5;
+        System.out.println(residual);
+        residual = Math.floorMod(-1, 5);
+        System.out.println(residual);
+    }
 }
