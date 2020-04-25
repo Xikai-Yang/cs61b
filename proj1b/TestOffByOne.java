@@ -9,7 +9,7 @@ public class TestOffByOne {
 
     // Your tests go here.
     Uncomment this class once you've created your CharacterComparator interface and OffByOne class. **/
-    public static CharacterComparator comparator = new OffByOne();
+    static CharacterComparator comparator = new OffByOne();
 
     @Test
     public void testEqualChars() {
