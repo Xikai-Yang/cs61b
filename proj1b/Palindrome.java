@@ -35,11 +35,5 @@ public class Palindrome {
         }
         return condition;
     }
-    public static void main(String[] args) {
-        String word = "&afb%";
-        Palindrome palindrome = new Palindrome();
-        CharacterComparator cc = new OffByOne();
-        System.out.println(palindrome.isPalindrome("flake", cc));
-    }
 
 }

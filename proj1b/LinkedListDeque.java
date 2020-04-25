@@ -12,7 +12,7 @@ public class LinkedListDeque<T> implements Deque<T> {
     private int size = 0;
     private Node<T> header;
     public LinkedListDeque() {
-        header = new Node<>(null,null,null);
+        header = new Node<>(null, null, null);
         header.next = header;
         header.prev = header;
         size = 0;
@@ -26,14 +26,14 @@ public class LinkedListDeque<T> implements Deque<T> {
      * size
      */
     private void addBetween(T item, Node<T> predecessor, Node<T> successor) {
-        Node<T> newest = new Node<>(item,predecessor,successor);
+        Node<T> newest = new Node<>(item, predecessor, successor);
         predecessor.next = newest;
         successor.prev = newest;
         size++;
     }
     @Override
     public void addFirst(T item) {
-        addBetween(item,header,header.next);
+        addBetween(item, header, header.next);
     }
     @Override
     public void addLast(T item) {
@@ -94,7 +94,7 @@ public class LinkedListDeque<T> implements Deque<T> {
             return null;
         }
         // not empty
-        return getRecursive(header.next,index);
+        return getRecursive(header.next, index);
     }
     @Override
     public void printDeque() {
