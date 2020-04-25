@@ -5,18 +5,19 @@ public class TestOffByOne {
     /*
     // You must use this CharacterComparator and not instantiate
     // new ones, or the autograder might be upset.
+    */
     static CharacterComparator offByOne = new OffByOne();
 
     // Your tests go here.
-    Uncomment this class once you've created your CharacterComparator interface and OffByOne class. **/
-    static CharacterComparator comparator = new OffByOne();
+    //Uncomment this class once you've created your CharacterComparator interface and OffByOne class. **/
+
 
     @Test
     public void testEqualChars() {
-        assertTrue(!comparator.equalChars('a','c'));
-        assertTrue(comparator.equalChars('b', 'a'));
-        assertTrue(comparator.equalChars('a', 'b'));
-        assertTrue(comparator.equalChars('d', 'c'));
-        assertTrue(comparator.equalChars('&', '%'));
+        assertTrue(!offByOne.equalChars('a','c'));
+        assertTrue(offByOne.equalChars('b', 'a'));
+        assertTrue(offByOne.equalChars('a', 'b'));
+        assertTrue(offByOne.equalChars('d', 'c'));
+        assertTrue(offByOne.equalChars('&', '%'));
     }
 }
