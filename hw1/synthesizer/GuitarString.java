@@ -21,10 +21,10 @@ public class GuitarString {
         //       Your buffer should be initially filled with zeros.
         int capacity = (int) Math.round(SR / frequency);
         buffer = new ArrayRingBuffer<>(capacity);
-        pluck();
+
     }
 
-    public void Print() {
+    private void Print() {
         for (Double item: buffer) {
             System.out.print(item + " ");
         }
