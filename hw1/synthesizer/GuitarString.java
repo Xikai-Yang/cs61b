@@ -26,12 +26,7 @@ public class GuitarString {
         }
     }
 
-    private void Print() {
-        for (Double item: buffer) {
-            System.out.print(item + " ");
-        }
-        System.out.println();
-    }
+
     /* Pluck the guitar string by replacing the buffer with white noise. */
     public void pluck() {
         // TODO: Dequeue everything in the buffer, and replace it with random numbers
@@ -42,7 +37,7 @@ public class GuitarString {
         while (!buffer.isEmpty()) {
             buffer.dequeue();
         }
-        double r = 0;
+        double r = 0.0;
         while (!buffer.isFull()) {
             r = Math.random() - 0.5;
             buffer.enqueue(r);
