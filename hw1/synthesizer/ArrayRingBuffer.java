@@ -71,12 +71,43 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
         return rb[first];
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+        if (o == null) {
+            return false;
+        }
+        if (o.getClass() != this.getClass()) {
+            return false;
+        }
+        ArrayRingBuffer<T> arrayRingBuffer = (ArrayRingBuffer<T>) o;
+        int thisPointer = this.first;
+        int oPointer = arrayRingBuffer.first;
+        int count = 0;
+        if (this.fillCount() == arrayRingBuffer.fillCount()) {
+            for (; count <= this.fillCount();) {
+                if (this.rb[thisPointer] != arrayRingBuffer.rb[oPointer]) {
+                    return false;
+                }
+                thisPointer = (thisPointer + 1) % this.capacity;
+                oPointer = (oPointer + 1) % arrayRingBuffer.capacity;
+                count++;
+            }
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
     // TODO: When you get to part 5, implement the needed code to support iteration.
     @Override
     public Iterator<T> iterator() {
         return new arbIterator();
     }
-    private class arbIterator implements Iterator<T>{
+    private class arbIterator implements Iterator<T> {
         int position;
         int count = 0;
         public arbIterator() {
