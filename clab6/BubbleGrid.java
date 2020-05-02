@@ -60,6 +60,17 @@ public class BubbleGrid {
         }
     }
 
+    /**
+     * there are some points we have to pay attention to in this problem
+     * the first thing is to make use of helper method
+     * the second thing is to make it clear which one is the vertical one and which one
+     * is the horizontal one
+     * the third thing which is the most hard one is that when doing iteration, you have
+     * to reverse the whole order which is from length -1 to 0
+     * ponder it!
+     * @param darts
+     * @return
+     */
     public int[] popBubbles(int[][] darts) {
         // TODO
         int[] numberOfBubbles = new int[darts.length];
