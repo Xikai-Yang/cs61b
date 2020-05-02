@@ -55,9 +55,12 @@ public class UnionFind {
         }
         int sizeV1 = data[rootV1] * -1;
         int sizeV2 = data[rootV2] * -1;
-        if (sizeV1 <= sizeV2) {
+        if (sizeV1 < sizeV2) {
             data[rootV2] += data[rootV1];
             data[rootV1] = rootV2;
+        } else {
+            data[rootV1] += data[rootV2];
+            data[rootV2] = rootV1;
         }
     }
 
@@ -66,11 +69,18 @@ public class UnionFind {
     public int find(int vertex) {
         // TODO
         validate(vertex);
-        int temp = vertex;
-        while (data[temp] >= 0) {
-            temp = data[temp];
+        int cur = vertex;
+        while (data[cur] >= 0) {
+            cur = data[cur];
         }
-        return temp;
+        // path compression
+        int temp = -1;
+        while (data[vertex] >= 0) {
+            temp = data[vertex];
+            data[vertex] = cur;
+            vertex = temp;
+        }
+        return cur;
     }
 
 }
