@@ -100,21 +100,61 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V>{
         keySet(root, myKeySet);
         return myKeySet;
     }
-    // fairly challenging
-    private V helperRemove(Node x, K key) {
+    // fairly challenging remove
+    private Node min(Node x) {
+        if (x.left == null) {
+            return x;
+        }
+        return min(x.left);
+    }
+    private Node deleteMin(Node x) {
+        if (x.left == null) {
+            return x.right;
+        }
+        x.left = deleteMin(x.left);
+        x.N = size(x.left) + size(x.right) + 1;
+        return x;
+    }
+
+    /**
+     * this remove method is relatively challenging
+     * And it implements Hibbard deletion
+     */
+    private Node remove(Node x, K key, V value) {
         if (x == null) {
             return null;
         }
-
+        int cmp = key.compareTo(x.key);
+        if (cmp < 0) {
+            x.left = remove(x.left, key, value);
+        } else if (cmp > 0) {
+            x.right = remove(x.right, key, value);
+        } else {
+            if (value != null && !value.equals(x.value)) {
+                return x;
+            }
+            if (x.left == null) {
+                return x.right;
+            } else if (x.right == null) {
+                return x.left;
+            }
+            Node minNode = min(x.right);
+            minNode.left = x.left;
+            minNode.right = deleteMin(x.right);
+            x = minNode;
+        }
+        x.N = size(x.left) + size(x.right) + 1;
+        return x;
     }
     @Override
     public V remove(K key) {
-        throw new UnsupportedOperationException();
+        root = remove(root, key, null);
     }
+
 
     @Override
     public V remove(K key, V value) {
-        throw new UnsupportedOperationException();
+        root = remove(root, key, value);
     }
 
 
@@ -149,22 +189,6 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V>{
     }
     public void printInOrder() {
         printInOrder(root);
-    }
-    public static void main(String[] args) {
-        BSTMap<String, Integer> b = new BSTMap<String, Integer>();
-        for (int i = 0; i < 455; i++) {
-            b.put("hi" + i, 1+i);
-            //make sure put is working via containsKey and get
-            assertTrue( null != b.get("hi" + i) && (b.get("hi"+i).equals(1+i))
-                    && b.containsKey("hi" + i));
-        }
-        Set<String> mySet = b.keySet();
-        int count = 0;
-        for (String item : mySet) {
-            count++;
-            System.out.println(item);
-        }
-        assertTrue(count == 455);
     }
 
 }
