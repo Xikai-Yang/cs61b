@@ -1,5 +1,3 @@
-import javax.swing.text.html.HTMLDocument;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
@@ -120,19 +118,16 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V>{
      * this remove method is relatively challenging
      * And it implements Hibbard deletion
      */
-    private Node remove(Node x, K key, V value) {
+    private Node remove(Node x, K key) {
         if (x == null) {
             return null;
         }
         int cmp = key.compareTo(x.key);
         if (cmp < 0) {
-            x.left = remove(x.left, key, value);
+            x.left = remove(x.left, key);
         } else if (cmp > 0) {
-            x.right = remove(x.right, key, value);
+            x.right = remove(x.right, key);
         } else {
-            if (value != null && !value.equals(x.value)) {
-                return x;
-            }
             if (x.left == null) {
                 return x.right;
             } else if (x.right == null) {
@@ -148,13 +143,22 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V>{
     }
     @Override
     public V remove(K key) {
-        root = remove(root, key, null);
+        V val = get(root, key);
+        if (val != null) {
+            root = remove(root, key);
+        }
+        return val;
     }
 
 
     @Override
     public V remove(K key, V value) {
-        root = remove(root, key, value);
+        V val = get(root, key);
+        if (val.equals(value)) {
+            root = remove(root, key);
+            return val;
+        }
+        return null;
     }
 
 
@@ -190,5 +194,4 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V>{
     public void printInOrder() {
         printInOrder(root);
     }
-
 }
