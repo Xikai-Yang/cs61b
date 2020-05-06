@@ -100,7 +100,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V>{
         keySet(root, myKeySet);
         return myKeySet;
     }
-
+    // fairly challenging
     private V helperRemove(Node x, K key) {
         if (x == null) {
             return null;
