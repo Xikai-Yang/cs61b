@@ -74,6 +74,10 @@ public class Percolation {
      * open the site (row, col) if it is not open already
      */
     public void open(int row, int col) {
+        if (cache[row][col]) {
+            // to avoid duplicates
+            return;
+        }
         cache[row][col] = true;
         unionAll(row, col);
         openCount++;
@@ -91,7 +95,6 @@ public class Percolation {
      */
     public boolean isFull(int row, int col) {
         return ufWithoutBottom.connected(xyTo1D(row, col), 0);
-
     }
 
     /**

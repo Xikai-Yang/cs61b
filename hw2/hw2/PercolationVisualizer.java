@@ -76,10 +76,10 @@ public class PercolationVisualizer {
             int j = in.readInt();
             perc.open(i, j);
             draw(perc, N);
-            //System.out.println(perc.isFull(0,0));
+            
             StdDraw.show(DELAY);
         }
-        //System.out.println(perc.percolates());
+        System.out.println(perc.percolates());
         //System.out.println(perc.numberOfOpenSites());
     }
 
