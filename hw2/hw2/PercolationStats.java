@@ -25,7 +25,10 @@ public class PercolationStats {
             int locationY = StdRandom.uniform(0, N);
             percolation.open(locationX, locationY);
         }
-        double ratio = percolation.numberOfOpenSites() / (N * N);
+        System.out.println(percolation.numberOfOpenSites());
+        System.out.println(N * N);
+        double ratio = (double) percolation.numberOfOpenSites() / (double) (N * N);
+        System.out.println(ratio);
         return ratio;
     }
     public double mean() {
@@ -39,6 +42,13 @@ public class PercolationStats {
     }
     public double confidenceHigh() {
         return mean() + (stddev() * 1.96) / Math.sqrt(times);
+    }
+
+    public static void main(String[] args) {
+        PercolationStats percolationStats = new PercolationStats(20, 100, new PercolationFactory());
+        System.out.println(percolationStats.mean());
+        System.out.println(percolationStats.stddev());
+
     }
 
 }
