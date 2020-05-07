@@ -83,10 +83,11 @@ public class Percolation {
      * is the site (row, col) full?
      */
     public boolean isFull(int row, int col) {
-        if (row > 0) {
-            return uf.connected(xyTo1D(row, col), 0);
+        if (N == 1) {
+            return false;
         }
-        return false;
+        return uf.connected(xyTo1D(row, col), 0);
+
     }
 
     /**
