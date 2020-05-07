@@ -7,6 +7,7 @@ import java.awt.desktop.SystemSleepEvent;
 public class Percolation {
     private int N;
     private WeightedQuickUnionUF uf;
+    private WeightedQuickUnionUF ufWithoutBottom;
     private boolean[][] cache;
     private int openCount = 0;
     /**
@@ -19,6 +20,7 @@ public class Percolation {
         this.openCount = 0;
         this.N = N;
         uf = new WeightedQuickUnionUF(N * N + 2);
+        ufWithoutBottom = new WeightedQuickUnionUF(N * N + 1);
         cache = new boolean[N][N];
     }
 
@@ -41,24 +43,29 @@ public class Percolation {
         boolean firstRow = row == 0 && col >= 0 && col < N;
         if (firstRow) {
             uf.union(xyTo1D(row, col), 0);
+            ufWithoutBottom.union(xyTo1D(row, col), 0);
         }
     }
     private void helperBottomCornerCases(int row, int col) {
         boolean lastRow = row == N - 1 && col >= 0 && col < N;
         if (lastRow) {
-            uf.union(xyTo1D(row, col), N * N - 1);
+            uf.union(xyTo1D(row, col), N * N + 1);
         }
     }
-    private void unionAll(int row, int col) {
+    private void helperCornerCases(int row, int col) {
         helperTopCornerCases(row, col);
+        helperBottomCornerCases(row, col);
+    }
+    private void unionAll(int row, int col) {
+        helperCornerCases(row, col);
         int[][] toBeUnioned = {{row - 1, col}, {row + 1, col}, {row, col + 1}, {row, col - 1}};
         for (int i = 0; i < toBeUnioned.length; i++) {
             int x = toBeUnioned[i][0];
             int y = toBeUnioned[i][1];
             if (validate(x, y) && isOpen(x, y)) {
                 uf.union(xyTo1D(row, col), xyTo1D(x, y));
-                helperTopCornerCases(x, y);
-                helperBottomCornerCases(x, y);
+                ufWithoutBottom.union(xyTo1D(row, col), xyTo1D(x, y));
+                helperCornerCases(x, y);
             }
         }
     }
@@ -83,10 +90,7 @@ public class Percolation {
      * is the site (row, col) full?
      */
     public boolean isFull(int row, int col) {
-        if (N == 1) {
-            return false;
-        }
-        return uf.connected(xyTo1D(row, col), 0);
+        return ufWithoutBottom.connected(xyTo1D(row, col), 0);
 
     }
 
@@ -102,12 +106,6 @@ public class Percolation {
      */
     public boolean percolates() {
         return uf.connected(0, N * N + 1);
-    }
-    public static void main(String[] args) {
-        Percolation perc = new Percolation(1);
-        perc.open(0,0);
-        System.out.println(perc.isFull(0,0));
-        System.out.println(perc.percolates());
     }
 
 

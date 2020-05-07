@@ -79,6 +79,8 @@ public class PercolationVisualizer {
             //System.out.println(perc.isFull(0,0));
             StdDraw.show(DELAY);
         }
+        //System.out.println(perc.percolates());
+        //System.out.println(perc.numberOfOpenSites());
     }
 
     public static void main(String[] args) {
