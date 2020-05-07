@@ -2,6 +2,8 @@ package hw2;
 
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
+import java.awt.desktop.SystemSleepEvent;
+
 public class Percolation {
     private int N;
     private WeightedQuickUnionUF uf;
@@ -81,7 +83,10 @@ public class Percolation {
      * is the site (row, col) full?
      */
     public boolean isFull(int row, int col) {
-        return uf.connected(xyTo1D(row, col), 0);
+        if (row > 0) {
+            return uf.connected(xyTo1D(row, col), 0);
+        }
+        return false;
     }
 
     /**
@@ -98,7 +103,10 @@ public class Percolation {
         return uf.connected(0, N * N + 1);
     }
     public static void main(String[] args) {
-
+        Percolation perc = new Percolation(1);
+        perc.open(0,0);
+        System.out.println(perc.isFull(0,0));
+        System.out.println(perc.percolates());
     }
 
 
