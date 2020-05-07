@@ -2,8 +2,6 @@ package hw2;
 
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
-import java.awt.desktop.SystemSleepEvent;
-
 public class Percolation {
     private int N;
     private WeightedQuickUnionUF uf;
@@ -111,5 +109,7 @@ public class Percolation {
         return uf.connected(0, N * N + 1);
     }
 
-
+    public static void main(String[] args) {
+        // just for unitTesting
+    }
 }
