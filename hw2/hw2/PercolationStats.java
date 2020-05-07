@@ -8,17 +8,17 @@ public class PercolationStats {
     private int times;
     // perform T independent experiments on an N-by-N grid
     public PercolationStats(int N, int T, PercolationFactory pf) {
-        if (N <=0 || T <= 0) {
+        if (N <= 0 || T <= 0) {
             throw new IllegalArgumentException();
         }
         this.ratioArray = new double[T];
         this.times = T;
         for (int i = 0; i < T; i++) {
-            this.ratioArray[i] = Simulation(N, pf);
+            this.ratioArray[i] = simulation(N, pf);
         }
     }
 
-    private double Simulation(int N, PercolationFactory pf) {
+    private double simulation(int N, PercolationFactory pf) {
         Percolation percolation = pf.make(N);
         while (!percolation.percolates()) {
             int locationX = StdRandom.uniform(0, N);

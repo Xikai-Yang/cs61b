@@ -18,11 +18,8 @@ public class Percolation {
         this.N = N;
         uf = new WeightedQuickUnionUF(N * N + 2);
         cache = new boolean[N][N];
-        for (int i = 1; i <= N ; ++i) {
+        for (int i = 1; i <= N; ++i) {
             uf.union(0, i);
-        }
-        for (int i = (N-1) * N + 1; i <= N*N ; i++) {
-            uf.union(N * N + 1, i);
         }
     }
 
@@ -37,16 +34,25 @@ public class Percolation {
         throw new IndexOutOfBoundsException();
     }
     private boolean validate(int row, int col) {
-        boolean condition = row >= 0 && row < N && col >=0 && col < N;
+        boolean condition = row >= 0 && row < N && col >= 0 && col < N;
         return condition;
     }
+    private boolean isLastRow(int row, int col) {
+        return row == N - 1 && col > 0 && col < N;
+    }
     private void unionAll(int row, int col) {
+        if (isLastRow(row, col)) {
+            uf.union(xyTo1D(row, col), N * N - 1);
+        }
         int[][] toBeUnioned = {{row - 1, col}, {row + 1, col}, {row, col + 1}, {row, col - 1}};
         for (int i = 0; i < toBeUnioned.length; i++) {
             int x = toBeUnioned[i][0];
             int y = toBeUnioned[i][1];
             if (validate(x, y) && isOpen(x, y)) {
-                uf.union(xyTo1D(row, col), xyTo1D(x,y));
+                uf.union(xyTo1D(row, col), xyTo1D(x, y));
+                if (isLastRow(x, y)) {
+                    uf.union(xyTo1D(x, y), N * N - 1);
+                }
             }
         }
     }
@@ -86,6 +92,9 @@ public class Percolation {
      */
     public boolean percolates() {
         return uf.connected(0, N * N + 1);
+    }
+    public static void main(String[] args) {
+
     }
 
 
