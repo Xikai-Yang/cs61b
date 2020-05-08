@@ -2,6 +2,9 @@ package hw2;
 
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Percolation {
     private int N;
     private WeightedQuickUnionUF uf;
@@ -111,5 +114,6 @@ public class Percolation {
 
     public static void main(String[] args) {
         // just for unitTesting
+        Map<String, Integer> map = new HashMap<>();
     }
 }
