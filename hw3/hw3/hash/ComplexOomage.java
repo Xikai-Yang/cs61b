@@ -10,7 +10,7 @@ import edu.princeton.cs.algs4.StdRandom;
 public class ComplexOomage implements Oomage {
     protected List<Integer> params;
     private static final double WIDTH = 0.05;
-
+    /*
     @Override
     public int hashCode() {
         int total = 0;
@@ -20,7 +20,7 @@ public class ComplexOomage implements Oomage {
         }
         return total;
     }
-
+    */
     @Override
     public boolean equals(Object o) {
         if (o.getClass() != this.getClass()) {

@@ -45,7 +45,7 @@ public class TestComplexOomage {
             ArrayList<Integer> params = new ArrayList<>();
             params.add(1);
             for (int j = 0; j < i; j++) {
-                params.add(0);
+                params.add(1);
             }
             ComplexOomage oom = new ComplexOomage(params);
             System.out.println(oom.hashCode());
