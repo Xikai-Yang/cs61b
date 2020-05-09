@@ -1,6 +1,8 @@
 package hw3.hash;
 import java.util.List;
 import java.util.ArrayList;
+
+import edu.princeton.cs.algs4.Complex;
 import edu.princeton.cs.algs4.StdDraw;
 import java.awt.Color;
 import edu.princeton.cs.algs4.StdRandom;
@@ -70,6 +72,9 @@ public class ComplexOomage implements Oomage {
             }
         }
     }
+
+
+
 
     public static ComplexOomage randomComplexOomage() {
         int N = StdRandom.uniform(1, 10);
