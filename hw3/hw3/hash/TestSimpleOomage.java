@@ -28,7 +28,7 @@ public class TestSimpleOomage {
          */
         Map<Integer, SimpleOomage> map = new HashMap<>();
         int count = 0;
-        for (int i = 0; i < 256 ; i += 5) {
+        for (int i = 0; i < 256; i += 5) {
             for (int j = 0; j < 256; j += 5) {
                 for (int k = 0; k < 256; k += 5) {
                     count++;
