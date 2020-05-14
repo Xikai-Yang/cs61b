@@ -63,6 +63,8 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
     /* Associates the specified value with the specified key in this map. */
     @Override
     public void put(K key, V value) {
+        // the relative order between resize and hash is important
+        // resize should be prior to hashCode otherwise the hashcode may be wrong
         resize(size * 2);
         int hashCode = hash(key);
         if (!this.buckets[hashCode].containsKey(key)) {
