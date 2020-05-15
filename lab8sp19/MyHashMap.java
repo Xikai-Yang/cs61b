@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -7,7 +8,7 @@ public class MyHashMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     private static final double DEFAULT_LOAD_FACTOR = 0.75;
     private int initialSize;
     private double loadFactor;
-    private Set[] buckets;
+    private ArrayList[] buckets;
     private int size;
 
     private class Entry {
@@ -37,25 +38,28 @@ public class MyHashMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     public MyHashMap(int initialSize, double loadFactor) {
         this.initialSize = initialSize;
         this.loadFactor = loadFactor;
-        this.buckets = new HashSet[initialSize];
+        this.buckets = (ArrayList<Entry>[]) new ArrayList[initialSize];
         for (int i = 0; i < buckets.length; i++) {
-            buckets[i] = new HashSet<Entry>();
+            buckets[i] = new ArrayList<Entry>();
         }
     }
     private void resize(int capacity) {
-        int threshold = (int) (initialSize * loadFactor);
+        int threshold = (int) (buckets.length * loadFactor);
         if (size > threshold) {
-            Set[] newBuckets = new HashSet[capacity];
+            ArrayList[] newBuckets = (ArrayList<Entry>[]) new ArrayList[capacity];
+            //Set[] newBuckets = new HashSet[capacity];
             for (int i = 0; i < newBuckets.length; i++) {
-                newBuckets[i] = new HashSet<Entry>();
+                newBuckets[i] = new ArrayList<Entry>();
             }
             for (int i = 0; i < this.buckets.length; i++) {
-                for (Object node : buckets[i]) {
-                    Entry newNode = (Entry) node;
-                    newBuckets[i].add(new Entry(newNode.getKey(), newNode.getValue()));
+                for (int j = 0; j < buckets[i].size(); j++) {
+                    Entry entry = ((Entry)buckets[i].get(j));
+                    newBuckets[i].add(new Entry(entry.getKey(), entry.getValue()));
                 }
             }
+            this.buckets = newBuckets;
         }
+
     }
 
     private int hash(K key) {
@@ -63,9 +67,9 @@ public class MyHashMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     }
     @Override
     public void clear() {
-        this.buckets = new HashSet[initialSize];
+        this.buckets = (ArrayList<Entry>[]) new ArrayList[initialSize];
         for (int i = 0; i < buckets.length; i++) {
-            buckets[i] = new HashSet<Entry>();
+            buckets[i] = new ArrayList<Entry>();
         }
         this.size = 0;
     }
@@ -85,7 +89,7 @@ public class MyHashMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
     @Override
     public V get(K key) {
-        resize(size * 2);
+
         int hashCode = hash(key);
         for (Object node : buckets[hashCode]) {
             Entry entry = (Entry) node;
@@ -104,6 +108,7 @@ public class MyHashMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
     @Override
     public void put(K key, V value) {
+        resize(size * 2);
         int hashCode = hash(key);
         for (Object node : buckets[hashCode]) {
             Entry entry = (Entry) node;
@@ -112,6 +117,7 @@ public class MyHashMap<K extends Comparable<K>, V> implements Map61B<K, V> {
                 return;
             }
         }
+
         buckets[hashCode].add(new Entry(key, value));
         size++;
     }
@@ -119,8 +125,8 @@ public class MyHashMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     @Override
     public Set keySet() {
         Set<K> kSet = new HashSet<>();
-        for (Set set : buckets) {
-            for (Object node : set) {
+        for (ArrayList list : buckets) {
+            for (Object node : list) {
                 Entry entry = (Entry) node;
                 kSet.add(entry.getKey());
             }
@@ -142,5 +148,9 @@ public class MyHashMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     @Override
     public Iterator iterator() {
         return keySet().iterator();
+    }
+
+    public static void main(String[] args) {
+        MyHashMap<String, Integer> map = new MyHashMap<>();
     }
 }
