@@ -134,13 +134,33 @@ public class MyHashMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         return kSet;
     }
 
+
+
     @Override
     public V remove(K key) {
+        int hashCode = hash(key);
+        for (int i = 0; i < buckets[hashCode].size(); i++) {
+            Entry entry = (Entry)buckets[hashCode].get(i);
+            if (entry.getKey().equals(key)) {
+                V returnValue = entry.getValue();
+                buckets[hashCode].remove(i);
+                return returnValue;
+            }
+        }
         return null;
     }
 
     @Override
     public V remove(K key, V value) {
+        int hashCode = hash(key);
+        for (int i = 0; i < buckets[hashCode].size(); i++) {
+            Entry entry = (Entry)buckets[hashCode].get(i);
+            V returnValue = entry.getValue();
+            if (entry.getKey().equals(key) && returnValue.equals(value)) {
+                buckets[hashCode].remove(i);
+                return returnValue;
+            }
+        }
         return null;
     }
 
