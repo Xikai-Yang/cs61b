@@ -172,5 +172,9 @@ public class MyHashMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
     public static void main(String[] args) {
         MyHashMap<String, Integer> map = new MyHashMap<>();
+        MyHashMap<String, Integer> map1 = new MyHashMap<>();
+        System.out.println(map.hashCode());
+        System.out.println(map1.hashCode());
+        System.out.println(map.equals(map1));
     }
 }
