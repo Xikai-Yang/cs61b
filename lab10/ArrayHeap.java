@@ -28,7 +28,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
      */
     private static int leftIndex(int i) {
         /* TODO: Your code here! */
-        return 0;
+        return i * 2;
     }
 
     /**
@@ -36,7 +36,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
      */
     private static int rightIndex(int i) {
         /* TODO: Your code here! */
-        return 0;
+        return i * 2 + 1;
     }
 
     /**
@@ -44,7 +44,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
      */
     private static int parentIndex(int i) {
         /* TODO: Your code here! */
-        return 0;
+        return i / 2;
     }
 
     /**
@@ -99,6 +99,11 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         }
     }
 
+    private boolean less(int index1, int index2) {
+        Node node1 = getNode(index1);
+        Node node2 = getNode(index2);
+        return node1.myPriority < node2.myPriority;
+    }
 
     /**
      * Bubbles up the node currently at the given index.
@@ -106,8 +111,12 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
     private void swim(int index) {
         // Throws an exception if index is invalid. DON'T CHANGE THIS LINE.
         validateSinkSwimArg(index);
-
         /** TODO: Your code here. */
+        while (index > 1 && less(index, index / 2)) {
+            swap(index, index / 2);
+            index = index / 2;
+        }
+
         return;
     }
 
@@ -119,6 +128,18 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         validateSinkSwimArg(index);
 
         /** TODO: Your code here. */
+        while (index * 2 <= size) {
+            int j = index * 2;
+            if (j < size && !less(j, j + 1)) {
+                // select the less one from them
+                j++;
+            }
+            if (less(index, j)) {
+                break;
+            }
+            swap(index, j);
+            index = j;
+        }
         return;
     }
 
@@ -134,6 +155,9 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         }
 
         /* TODO: Your code here! */
+        size++;
+        contents[size] = new Node(item, priority);
+        swim(size);
     }
 
     /**
@@ -143,7 +167,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
     @Override
     public T peek() {
         /* TODO: Your code here! */
-        return null;
+        return contents[1].myItem;
     }
 
     /**
@@ -158,7 +182,11 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
     @Override
     public T removeMin() {
         /* TODO: Your code here! */
-        return null;
+        T returnValue = peek();
+        swap(1, size);
+        contents[size--] = null;
+        sink(1);
+        return returnValue;
     }
 
     /**
@@ -171,6 +199,20 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         return size;
     }
 
+
+    private Node findItem(T item, int index) {
+        if (index > size) {
+            return null;
+        }
+        int leftChild = index * 2;
+        int rightChild = index * 2 + 1;
+        findItem(item, leftChild);
+        if (contents[index].myItem.equals(item)) {
+            return contents[index];
+        }
+        findItem(item, rightChild);
+        return null;
+    }
     /**
      * Change the node in this heap with the given item to have the given
      * priority. You can assume the heap will not have two nodes with the same
@@ -181,7 +223,11 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
     @Override
     public void changePriority(T item, double priority) {
         /* TODO: Your code here! */
-        return;
+        Node node = findItem(item, 1);
+        if (node != null) {
+            node.myPriority = priority;
+        }
+
     }
 
     /**
@@ -285,6 +331,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         // Change item x6's priority to a low value.
 
         pq.contents[6].myPriority = 0;
+
         System.out.println("PQ before swimming:");
         System.out.println(pq);
 
@@ -313,7 +360,6 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         pq.contents[1].myPriority = 10;
         System.out.println("PQ before sinking:");
         System.out.println(pq);
-
         // Sink the root.
         pq.sink(1);
         System.out.println("PQ after sinking:");
