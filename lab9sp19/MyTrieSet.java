@@ -1,7 +1,5 @@
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
 
 public class MyTrieSet implements TrieSet61B{
 
@@ -17,13 +15,17 @@ public class MyTrieSet implements TrieSet61B{
     }
     public MyTrieSet() {
         root = new Node();
-
     }
     @Override
     public void clear() {
         root = new Node();
     }
 
+    /**
+     * the first thing is to check if the node is null, if it is null, then it will return null
+     * then the second thing is to check if the length == key.length(); if so, then we have found the node
+     * otherwise, we just forward our recursion and increase the length variable
+     */
     private Node get(String key, Node x, int length) {
         if (x == null) {
             return null;
@@ -42,6 +44,12 @@ public class MyTrieSet implements TrieSet61B{
         return (returnNode != null && returnNode.isKey);
     }
 
+    /**
+     * this function is an addHelper function and returns a node as output
+     * if Node x is a null node, then we just create a new one
+     * if the length == key.length(), we will just return and previous operations can guarantee that this node
+     * is not a null node
+     */
     private Node add(String key, Node x, int length) {
         if (x == null) {
             x = new Node();
@@ -58,6 +66,7 @@ public class MyTrieSet implements TrieSet61B{
     public void add(String key) {
         root = add(key, root, 0);
     }
+
 
     private void collect(String pre, Node x, List<String> list) {
         if (x == null) {
@@ -80,18 +89,47 @@ public class MyTrieSet implements TrieSet61B{
         return stringList;
     }
 
+    private String longestPrefixOf(String key, Node x, String prefix, int length) {
+        if (x == null) {
+            return prefix;
+        }
+        if (x.isKey) {
+            prefix = key.substring(0, length);
+        }
+        if (length == key.length()) {
+            return prefix;
+        }
+        char item = key.charAt(length);
+        return longestPrefixOf(key, x.next[item], prefix, length + 1);
+    }
+
     @Override
     public String longestPrefixOf(String key) {
-        throw new UnsupportedOperationException();
+        return longestPrefixOf(key, root, "", 0);
+        // throw new UnsupportedOperationException();
     }
 
     public static void main(String[] args) {
-        MyTrieSet t = new MyTrieSet();
-        t.add("hello");
-        t.add("hi");
-        t.add("help");
-        t.add("zebra");
-        List<String> list= t.keysWithPrefix("h");
-        System.out.println(list);
+        String a = "abc";
+        MyTrieSet trie = new MyTrieSet();
+        trie.add("h");
+        trie.add("hi");
+        trie.add("hello");
+        trie.add("help");
+        trie.add("zebra");
+        trie.add("homonym");
+        trie.add("homophone");
+        trie.add("homosexual");
+        trie.add("she");
+        trie.add("shells");
+
+        System.out.println(trie.contains("hello")); // expect true
+        System.out.println(trie.keysWithPrefix("h")); // expect [help, hello, hi, homophone, homosexual, homonym]
+        //System.out.println(trie.longestCommonPrefixOf("hello")); // expect hel
+        System.out.println(trie.keysWithPrefix("homo")); // expect [homophone, homosexual, homonym]
+        System.out.println(trie.longestPrefixOf("helpful")); // expect help
+        System.out.println(trie.longestPrefixOf("homogeneous")); // expect h
+        System.out.println(trie.longestPrefixOf("shellsort"));
+        System.out.println(trie.longestPrefixOf("shell"));
     }
 }
