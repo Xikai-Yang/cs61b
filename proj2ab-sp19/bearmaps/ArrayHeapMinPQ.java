@@ -89,7 +89,7 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
     private void sink(int index) {
         while (index * 2 <= size) {
             int j = index * 2;
-            if (!less(j, j + 1)) {
+            if (j + 1 <= size && !less(j, j + 1)) {
                 j++;
             }
             if (less(index, j)) {
