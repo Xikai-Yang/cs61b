@@ -34,7 +34,9 @@ public class KDTree implements PointSet {
         public PointComparator() {
             this.xAxis = true;
         }
-
+        public boolean getAxis() {
+            return this.xAxis;
+        }
         @Override
         public int compare(Point o1, Point o2) {
             if (this.xAxis) {
@@ -93,6 +95,18 @@ public class KDTree implements PointSet {
         }
     }
 
+    private double roughDistance(Node node, Point goal) {
+        boolean xAxis = node.getPointComparator().getAxis();
+        Point point = node.getPoint();
+        double delta = 0x7fffffff;
+        if (xAxis) {
+            // use xAxis to check
+            delta = point.getX() - goal.getX();
+        } else {
+            delta = point.getY() - goal.getY();
+        }
+        return delta * delta;
+    }
     private Node nearestHelper(Node curr, Node best, Point goal) {
         if (curr == null) {
             return best;
@@ -102,8 +116,27 @@ public class KDTree implements PointSet {
         if (distance < bestDistance) {
             best = curr;
         }
-        best = nearestHelper(curr.left, best, goal);
-        best = nearestHelper(curr.right, best, goal);
+        // decide which one is the best side
+        int cmp = curr.getPointComparator().compare(curr.getPoint(), goal);
+        Node goodSide = null;
+        Node badSide = null;
+        if (cmp == 0) {
+            return best;
+        }
+        if (cmp < 0) {
+            goodSide = curr.right;
+            badSide = curr.left;
+        }
+        if (cmp > 0) {
+            goodSide = curr.left;
+            badSide = curr.right;
+        }
+        // until now we have decided which one is the better side.
+        best = nearestHelper(goodSide, best, goal);
+        double roughDistance = this.roughDistance(curr, goal);
+        if (roughDistance < bestDistance) {
+            best = nearestHelper(badSide, best, goal);
+        }
         return best;
 
     }
