@@ -49,6 +49,11 @@ public class SeparableEnemySolver {
         labels = g.labels();
         stringIntegerMap = new HashMap<>();
         for (String label : labels) {
+            /*
+            why should we do a for loop instead of one call for dfs?
+            because there may exist several independent connected component
+            so if we only call dfs(start) or something, then maybe we will lose some vertices
+             */
             stringIntegerMap.put(label, 0);
         }
 
@@ -75,36 +80,6 @@ public class SeparableEnemySolver {
         return true;
     }
 
-    /*
-    private boolean bfs(String start) {
-        stringBooleanMap.put(start, true);
-
-        Queue<String> queue = new ArrayDeque<>();
-        marked.put(start, true);
-        queue.add(start);
-        while (!queue.isEmpty()) {
-            String string = queue.poll();
-            boolean ans = stringBooleanMap.get(string);
-            booleanSetMap.get(ans).add(string);
-
-            for (String neighbor : g.neighbors(string)) {
-                if (!marked.get(neighbor)) {
-                    stringBooleanMap.put(neighbor, !ans);
-                    booleanSetMap.get(!ans).add(neighbor);
-                    marked.put(neighbor, true);
-                    queue.add(neighbor);
-                } else {
-                    if (booleanSetMap.get(ans).contains(neighbor)) {
-                        return false;
-                    }
-                }
-            }
-        }
-        return true;
-
-    }
-
-     */
 
 
     /* HELPERS FOR READING IN CSV FILES. */
