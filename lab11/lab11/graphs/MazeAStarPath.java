@@ -57,6 +57,11 @@ public class MazeAStarPath extends MazeExplorer {
     private void dijkstra(int s) {
         vertices = new PriorityQueue<>();
         vertices.add(new Vertex(s, 0));
+        for (int i = 0; i < maze.V() - 1; i++) {
+            if (i != s) {
+                distTo[i] = Integer.MAX_VALUE;
+            }
+        }
         marked[s] = true;
         edgeTo[s] = s;
         distTo[s] = 0;
