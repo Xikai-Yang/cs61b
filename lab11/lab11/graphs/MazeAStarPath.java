@@ -1,5 +1,8 @@
 package lab11.graphs;
 
+import java.util.PriorityQueue;
+import java.util.Queue;
+
 /**
  *  @author Josh Hug
  */
@@ -20,7 +23,63 @@ public class MazeAStarPath extends MazeExplorer {
 
     /** Estimate of the distance from v to the target. */
     private int h(int v) {
-        return -1;
+        int targetX = maze.toX(t);
+        int targetY = maze.toY(t);
+        int sourceX = maze.toX(v);
+        int sourceY = maze.toY(v);
+        return Math.abs(sourceX - targetX) + Math.abs(sourceY - targetY);
+    }
+    private Queue<Vertex> vertices;
+    private void relax(int start, int end) {
+
+        if (distTo[end] > distTo[start] + 1) {
+            distTo[end] = distTo[start] + 1;
+            edgeTo[end] = start;
+            announce();
+        }
+    }
+    private class Vertex implements Comparable<Vertex> {
+        private int number;
+        private int distance;
+        public Vertex(int number, int distance) {
+            this.number = number;
+            this.distance = distance;
+        }
+
+        @Override
+        public int compareTo(Vertex o) {
+            return Integer.compare(this.distance, o.distance);
+        }
+        public int getNumber() {
+            return this.number;
+        }
+    }
+    private void dijkstra(int s) {
+        vertices = new PriorityQueue<>();
+        vertices.add(new Vertex(s, 0));
+        marked[s] = true;
+        edgeTo[s] = s;
+        distTo[s] = 0;
+        announce();
+        while (!vertices.isEmpty()) {
+            Vertex vertex = vertices.poll();
+            marked[vertex.getNumber()] = true; // label it as visited
+            announce();
+            for (Integer neighbor : maze.adj(vertex.getNumber())) {
+                if (!marked[neighbor]) {
+                    relax(vertex.getNumber(), neighbor);
+                    vertices.add(new Vertex(neighbor, distTo[neighbor] + h(neighbor)));
+                }
+                if (targetFound) {
+                    return;
+                }
+                if (marked[t]) {
+                    targetFound = true;
+                    return;
+                }
+            }
+        }
+
     }
 
     /** Finds vertex estimated to be closest to target. */
@@ -32,6 +91,7 @@ public class MazeAStarPath extends MazeExplorer {
     /** Performs an A star search from vertex s. */
     private void astar(int s) {
         // TODO
+        dijkstra(s);
     }
 
     @Override

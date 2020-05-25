@@ -1,5 +1,8 @@
 package lab11.graphs;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *  @author Josh Hug
  */
@@ -21,6 +24,8 @@ public class MazeCycles extends MazeExplorer {
     public void solve() {
         // TODO: Your code here!
         dfs(0, 0);
+        List<Integer> aList = new ArrayList<>();
+
     }
 
     // Helper methods go here
