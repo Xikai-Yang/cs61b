@@ -80,9 +80,12 @@ public class Solver {
 
     private Stack<WorldState> helperSolver() {
         Stack<WorldState> worldStateStack = new Stack<>();
+        if (this.initial.getWorldState().isGoal()) {
+            return worldStateStack;
+        }
         while (!minPQ.isEmpty()) {
             SearchNode searchNode = minPQ.delMin();
-            System.out.println(searchNode.worldState);
+
             this.searchNodeSet.add(searchNode);
             for (WorldState neighbor : searchNode.getWorldState().neighbors()) {
                 boolean condition = searchNode.prev == null || !neighbor.equals(searchNode.prev.getWorldState());
@@ -101,7 +104,6 @@ public class Solver {
                     enqueueTimes++;
                 }
                */
-
 
 
                 if (neighbor.isGoal()) {
@@ -124,6 +126,9 @@ public class Solver {
      * @return
      */
     public int moves() {
+        if (stateStack.size() == 0) {
+            return 0;
+        }
         return stateStack.size() - 1;
     }
 
