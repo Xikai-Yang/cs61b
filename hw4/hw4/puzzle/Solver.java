@@ -81,6 +81,7 @@ public class Solver {
     private Stack<WorldState> helperSolver() {
         Stack<WorldState> worldStateStack = new Stack<>();
         if (this.initial.getWorldState().isGoal()) {
+            worldStateStack.push(this.initial.getWorldState());
             return worldStateStack;
         }
         while (!minPQ.isEmpty()) {
@@ -126,9 +127,6 @@ public class Solver {
      * @return
      */
     public int moves() {
-        if (stateStack.size() == 0) {
-            return 0;
-        }
         return stateStack.size() - 1;
     }
 
