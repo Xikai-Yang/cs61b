@@ -2,7 +2,7 @@ package hw4.puzzle;
 
 import edu.princeton.cs.algs4.Queue;
 
-public class Board implements WorldState{
+public class Board implements WorldState {
     private int[][] tiles;
     public Board(int[][] tiles) {
         int N = tiles.length;
@@ -14,7 +14,7 @@ public class Board implements WorldState{
         }
     }
     public int tileAt(int i, int j) {
-        if (i >= 0 && i < size() && j >=0 && j < size()) {
+        if (i >= 0 && i < size() && j >= 0 && j < size()) {
             return tiles[i][j];
         }
         throw new IndexOutOfBoundsException();
@@ -128,7 +128,7 @@ public class Board implements WorldState{
         s.append(N + "\n");
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                s.append(String.format("%2d ", tileAt(i,j)));
+                s.append(String.format("%2d ", tileAt(i, j)));
             }
             s.append("\n");
         }

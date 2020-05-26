@@ -105,8 +105,7 @@ public class Solver {
                     enqueueTimes++;
                 }
                */
-
-
+                
                 if (neighbor.isGoal()) {
                     worldStateStack.push(neighbor);
                     SearchNode temp = searchNode;
@@ -130,7 +129,7 @@ public class Solver {
         return stateStack.size() - 1;
     }
 
-    public int getEnqueueTimes() {
+    private int getEnqueueTimes() {
         return this.enqueueTimes;
     }
 
