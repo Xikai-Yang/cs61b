@@ -36,6 +36,7 @@ public class MazeAStarPath extends MazeExplorer {
             distTo[end] = distTo[start] + 1;
             edgeTo[end] = start;
             announce();
+            
         }
     }
     private class Vertex implements Comparable<Vertex> {
