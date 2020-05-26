@@ -30,31 +30,14 @@ public class Board implements WorldState{
                 if (tileAt(row, col) == 0) {
                     continue;
                 }
-                if (tileAt(row, col) != row * size() + col) {
+                if (tileAt(row, col) != row * size() + col + 1) {
                     hammingDistance++;
                 }
             }
         }
         return hammingDistance;
     }
-    /*
-    public int manhattan() {
-        int manhattanDistance = 0;
-        for (int row = 0; row < size(); row++) {
-            for (int col = 0; col < size(); col++) {
-                int actualValue = tileAt(row, col);
-                if (actualValue == 0) {
-                    continue;
-                }
-                int actualRow = actualValue / size();
-                int actualCol = actualRow % size();
-                int distance = Math.abs(actualCol - col) + Math.abs(actualRow - row);
-                manhattanDistance += distance;
-            }
-        }
-        return manhattanDistance;
-    }
-     */
+
     public int manhattan() {
         int estimatedDistance = 0;
         for (int r = 0; r < size(); r += 1) {
