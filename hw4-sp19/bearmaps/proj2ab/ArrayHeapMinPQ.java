@@ -40,7 +40,7 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
         return heap;
     }
     private Node<T>[] pq;
-    private Map<Node<T>, Integer> map;
+    private Map<T, Integer> map;
     private int size;
     private static final int DEFAULT_INIT_CAPACITY = 11;
     public ArrayHeapMinPQ(int initCapacity) {
@@ -78,8 +78,8 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
         Node tempNode = pq[i];
         pq[i] = pq[j];
         pq[j] = tempNode;
-        map.put(pq[i], i);
-        map.put(pq[j], j);
+        map.put(pq[i].getItem(), i);
+        map.put(pq[j].getItem(), j);
     }
 
     private boolean less(int i, int j) {
@@ -115,10 +115,11 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
     @Override
     public void add(T item, double priority) {
         if (contains(item)) {
+            //System.out.println();
             throw new IllegalArgumentException();
         }
         pq[++size] = new Node<>(item, priority);
-        map.put(new Node<>(item, priority), size);
+        map.put(item, size);
         swim(size);
         resize();
     }
@@ -126,7 +127,7 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
     @Override
     public boolean contains(T item) {
         // O(log)
-        return map.containsKey(new Node<>(item, -1));
+        return map.containsKey(item);
     }
 
     @Override
@@ -146,8 +147,9 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
         pq[size] = null;
         size--;
         sink(1);
-        map.remove(new Node<>(returnValue, -1));
+        map.remove(returnValue);
         resize();
+
         return returnValue;
     }
 
@@ -162,7 +164,7 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T> {
         if (!contains(item)) {
             throw new NoSuchElementException();
         }
-        Integer index = map.get(new Node<>(item, -1));
+        Integer index = map.get(item);
         double originalPriority = pq[index].getPriority();
         pq[index].setPriority(priority);
         if (originalPriority < priority) {

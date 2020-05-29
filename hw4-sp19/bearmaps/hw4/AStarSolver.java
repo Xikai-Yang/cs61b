@@ -1,6 +1,7 @@
 package bearmaps.hw4;
 
 import bearmaps.proj2ab.ArrayHeapMinPQ;
+import bearmaps.proj2ab.DoubleMapPQ;
 import bearmaps.proj2ab.ExtrinsicMinPQ;
 import edu.princeton.cs.algs4.Stopwatch;
 
@@ -23,6 +24,7 @@ public class AStarSolver<Vertex> implements ShortestPathsSolver<Vertex> {
 
     public AStarSolver(AStarGraph<Vertex> input, Vertex start, Vertex end, double timeout) {
         this.minPQ = new ArrayHeapMinPQ<>();
+        //this.minPQ = new DoubleMapPQ<>();
         this.graph = input;
         this.start = start;
         this.goal = end;
