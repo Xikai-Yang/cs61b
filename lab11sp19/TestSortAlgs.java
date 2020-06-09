@@ -9,6 +9,12 @@ import static org.junit.Assert.*;
 
 public class TestSortAlgs {
 
+    @Test
+    public void testVoidMergeSort() {
+        Queue<Integer> integerQueue = new Queue<>();
+        Queue<Integer> queue = QuickSort.quickSort(integerQueue);
+        assertTrue(queue.size() == 0);
+    }
 
     @Test
     public void testQuickSort() {
