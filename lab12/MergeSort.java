@@ -76,7 +76,7 @@ public class MergeSort {
     public static <Item extends Comparable> Queue<Item> mergeSort(
             Queue<Item> items) {
         // Your code here!
-        if (items.size() == 0) {
+        if (items.isEmpty()) {
             return items;
         }
         ArrayList<Queue<Item>> queueArrayList = makeSingleItemList(items);
@@ -97,7 +97,7 @@ public class MergeSort {
     private static <Item extends Comparable> Queue<Item> mergeSortHelper(
             List<Queue<Item>> queueList, int start, int end) {
         if (start >= end) {
-            return queueList.get(start);
+            return queueList.get(end);
         }
         int mid = (start + end) / 2;
         Queue<Item> leftQueue = mergeSortHelper(queueList, start, mid);
