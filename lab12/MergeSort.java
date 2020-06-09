@@ -1,5 +1,8 @@
 import edu.princeton.cs.algs4.Queue;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MergeSort {
     /**
      * Removes and returns the smallest item that is in q1 or q2.
@@ -35,7 +38,14 @@ public class MergeSort {
     private static <Item extends Comparable> Queue<Queue<Item>>
             makeSingleItemQueues(Queue<Item> items) {
         // Your code here!
-        return null;
+        Queue<Queue<Item>> queueQueue = new Queue<>();
+        while (!items.isEmpty()) {
+            Item item = items.dequeue();
+            Queue<Item> itemQueue = new Queue<>();
+            itemQueue.enqueue(item);
+            queueQueue.enqueue(itemQueue);
+        }
+        return queueQueue;
     }
 
     /**
@@ -54,13 +64,41 @@ public class MergeSort {
     private static <Item extends Comparable> Queue<Item> mergeSortedQueues(
             Queue<Item> q1, Queue<Item> q2) {
         // Your code here!
-        return null;
+        Queue<Item> queue = new Queue<>();
+        while (!q1.isEmpty() || !q2.isEmpty()) {
+            queue.enqueue(getMin(q1, q2));
+        }
+        return queue;
+
     }
 
     /** Returns a Queue that contains the given items sorted from least to greatest. */
     public static <Item extends Comparable> Queue<Item> mergeSort(
             Queue<Item> items) {
         // Your code here!
-        return items;
+        ArrayList<Queue<Item>> queueArrayList = makeSingleItemList(items);
+        return mergeSortHelper(queueArrayList, 0, queueArrayList.size() - 1);
+
+    }
+    private static <Item extends Comparable> ArrayList<Queue<Item>> makeSingleItemList(Queue<Item> items) {
+        ArrayList<Queue<Item>> arrayList = new ArrayList<>();
+        while (!items.isEmpty()) {
+            Item item = items.dequeue();
+            Queue<Item> itemQueue = new Queue<>();
+            itemQueue.enqueue(item);
+            arrayList.add(itemQueue);
+        }
+        return arrayList;
+
+    }
+    private static <Item extends Comparable> Queue<Item> mergeSortHelper(
+            List<Queue<Item>> queueList, int start, int end) {
+        if (start >= end) {
+            return queueList.get(end);
+        }
+        int mid = (start + end) / 2;
+        Queue<Item> leftQueue = mergeSortHelper(queueList, start, mid);
+        Queue<Item> rightQueue = mergeSortHelper(queueList, mid + 1, end);
+        return mergeSortedQueues(leftQueue, rightQueue);
     }
 }
