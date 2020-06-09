@@ -67,7 +67,7 @@ public class QuickSort {
             Queue<Item> items) {
         // Your code here!
         return quickSortHelper(items);
-        
+
     }
     private static <Item extends Comparable> Queue<Item> quickSortHelper(
             Queue<Item> unsorted
