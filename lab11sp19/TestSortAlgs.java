@@ -24,7 +24,7 @@ public class TestSortAlgs {
             assertTrue(item.compareTo(benchmark) >= 0);
             benchmark = item;
         }
-        
+
     }
 
 

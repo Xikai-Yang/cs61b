@@ -111,7 +111,7 @@ public class MergeSort {
     private static <Item extends Comparable> Queue<Item> mergeSortHelper(
             List<Queue<Item>> queueList, int start, int end) {
         if (start >= end) {
-            return queueList.get(end);
+            return queueList.get(start);
         }
         int mid = (start + end) / 2;
         Queue<Item> leftQueue = mergeSortHelper(queueList, start, mid);
